@@ -74,7 +74,7 @@ var BoxManager = {
         
         _.each(freeboxesToToggle, BoxManager.toggleConnection);
         
-        if(freeboxesToToggle.length() > 0)
+        if(freeboxesToToggle.length > 0)
             console.log(freeboxesToToggle);
     }
 };

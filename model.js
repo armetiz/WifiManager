@@ -1,15 +1,18 @@
 Freeboxes = new Meteor.Collection("freeboxes");
 
-HOURS_MASK = []; //binary mask for hours management
+Application = {
+    HOURS_MASK:[],
+    isHourEnabled: function (hoursMask, hour) {
+        return (0 !== (hoursMask & Application.HOURS_MASK[hour]));
+    }
+}
 
 for (var i = 0 ; i < 24 ; i++) {
-    HOURS_MASK.push(1 << i);
+    Application.HOURS_MASK.push(1 << i);
 }
 
 // Check is hoursMask contain an enabled hour
-isHourEnabled = function (hoursMask, hour) {
-    return (0 !== (hoursMask & HOURS_MASK[hour]));
-};
+
 
 Freeboxes.allow({
   insert: function (userId, freebox) {

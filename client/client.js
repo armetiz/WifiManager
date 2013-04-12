@@ -19,15 +19,15 @@ Template.freeboxes.events({
     },
     'click .scheduler .hour': function(e) {
         var hourButton = jQuery(e.currentTarget);
-        var freebox = Freeboxes.findOne(Session.get('selected-freebox')._id);
+        var freebox = Freeboxes.findOne(Session.get('selected-freebox')._id);   //get fresh version
         var hoursEnabled = freebox.hoursEnabled;
         var hourSelected = hourButton.data('hour');
         
-        if(isHourEnabled(hoursEnabled, hourSelected)) {
-            hoursEnabled -= HOURS_MASK[hourButton.data('hour')];
+        if(Application.isHourEnabled(hoursEnabled, hourSelected)) {
+            hoursEnabled -= Application.HOURS_MASK[hourSelected];
         }
         else {
-            hoursEnabled += HOURS_MASK[hourButton.data('hour')];
+            hoursEnabled += Application.HOURS_MASK[hourSelected];
         }
         
         Freeboxes.update(freebox._id, {$set: {hoursEnabled: hoursEnabled}});
@@ -65,10 +65,10 @@ Template.freeboxes.helpers({
         var hours = [];
         var freebox = Freeboxes.findOne(Session.get('selected-freebox')._id);
         
-        _.each(HOURS_MASK, function(value, key) {
+        _.each(Application.HOURS_MASK, function(value, key) {
             hours.push({
                 hour: key,
-                enabled: isHourEnabled(freebox.hoursEnabled, key)
+                enabled: Application.isHourEnabled(freebox.hoursEnabled, key)
             });
         });
         

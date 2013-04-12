@@ -1,10 +1,11 @@
 Meteor.subscribe("freeboxes");
 
 Session.setDefault('enabled-hours', parseInt(0, 2));
+Session.setDefault('selected-freebox', null)
 
 Template.freeboxes.events({
     'click .freebox input[name="schedule"]' : function(e) {
-        if(Session.get('selected-freebox')) {
+        if(_.isEqual(this, Session.get('selected-freebox'))) {
             Session.set('selected-freebox', null);
         }
         else {

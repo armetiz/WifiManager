@@ -2,8 +2,8 @@ Freeboxes = new Meteor.Collection("freeboxes");
 
 Application = {
     HOURS_MASK:[],
-    isHourEnabled: function (hoursMask, hour) {
-        return (0 !== (hoursMask & Application.HOURS_MASK[hour]));
+    isHourEnabled: function (hoursEnabled, hour) {
+        return (0 !== (hoursEnabled & Application.HOURS_MASK[hour]));
     }
 }
 
@@ -11,7 +11,7 @@ for (var i = 0 ; i < 24 ; i++) {
     Application.HOURS_MASK.push(1 << i);
 }
 
-// Check is hoursMask contain an enabled hour
+// Check is hoursEnabled contain an enabled hour
 
 
 Freeboxes.allow({
@@ -56,7 +56,8 @@ Meteor.methods({
             hostname: options.hostname,
             password: options.password,
             wifi: false,
-            hoursEnabled: 0
+            hoursEnabled: 0,
+            connected: false
         });
     }
 });

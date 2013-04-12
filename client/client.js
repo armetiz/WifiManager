@@ -5,7 +5,7 @@ Session.setDefault('selected-freebox', null)
 
 Template.freeboxes.events({
     'click .freebox input[name="schedule"]' : function(e) {
-        if(_.isEqual(this, Session.get('selected-freebox'))) {
+        if(Session.get('selected-freebox') && this._id === Session.get('selected-freebox')._id) {
             Session.set('selected-freebox', null);
         }
         else {

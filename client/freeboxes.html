@@ -37,14 +37,14 @@
             <th>Action</th>
         </tr>
         {{#each freeboxes}}
-        <tr class="freebox {{#if wifi}}success{{else}}error{{/if}}">
+        <tr class="freebox {{{classFreebox this}}}">
             <td>{{title}}</td>
             <td>{{hostname}}</td>
             <td>{{#if wifi}}active{{else}}inactive{{/if}}</td>
             <td>
-                <input type="button" name="toggle" class="btn" value="toggle" />
-                <input type="button" name="schedule" class="btn" value="schedule" />
-                <input type="button" name="delete" class="btn" value="delete" />
+                <input type="button" name="toggle" class="btn btn-small" value="toggle" />
+                <input type="button" name="schedule" class="btn btn-small" value="schedule" />
+                <input type="button" name="delete" class="btn btn-small" value="delete" />
             </td>
         </tr>
         {{/each}}

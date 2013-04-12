@@ -10,14 +10,14 @@ var checkConnection = function(freebox) {
     freeboxCnx.on('connect', function() {
         freeboxCnx.wifiStatus(function (status) {
             Fiber(function() {
-                Freeboxes.update(freebox._id, {$set: {wifi: status.active}});
+                Freeboxes.update(freebox._id, {$set: {wifi: status.active, connected: true}});
             }).run();
         });
     });
 
     freeboxCnx.on('error', function(message) {
         Fiber(function() {
-            Freeboxes.update(freebox._id, {$set: {wifi: false}});
+            Freeboxes.update(freebox._id, {$set: {wifi: false, connected: false}});
         }).run();
     });
 
@@ -50,14 +50,14 @@ Meteor.methods({
                 if(status.active) {
                     freeboxCnx.wifiOff(function (result) {
                         Fiber(function() {
-                            Freeboxes.update(freebox._id, {$set: {wifi: false}});
+                            Freeboxes.update(freebox._id, {$set: {wifi: false, connected: true}});
                         }).run();
                     });
                 }
                 else {
                     freeboxCnx.wifiOn(function (result) {
                         Fiber(function() {
-                            Freeboxes.update(freebox._id, {$set: {wifi: true}});
+                            Freeboxes.update(freebox._id, {$set: {wifi: true, connected: true}});
                         }).run();
                     });
                 }
@@ -66,6 +66,9 @@ Meteor.methods({
         });
 
         freeboxCnx.on('error', function(message) {
+            Fiber(function() {
+                Freeboxes.update(freebox._id, {$set: {connected: false}});
+            }).run();
         });
 
         freeboxCnx.connect();

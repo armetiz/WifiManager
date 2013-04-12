@@ -62,6 +62,18 @@ Template.freeboxes.helpers({
             return 'btn-inverse';
         }
     },
+    classFreebox: function(freebox) {
+        if(!freebox.connected) {
+            return 'error';
+        }
+        
+        if(freebox.wifi) {
+            return 'success';
+        }
+        else {
+            return 'warning';
+        }
+    },
     hours: function() {
         var hours = [];
         var freebox = Freeboxes.findOne(Session.get('selected-freebox')._id);

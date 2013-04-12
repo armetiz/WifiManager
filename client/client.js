@@ -1,7 +1,7 @@
 Meteor.subscribe("freeboxes");
 
 Session.setDefault('enabled-hours', parseInt(0, 2));
-Session.setDefault('selected-freebox', null)
+Session.setDefault('selected-freebox', null);
 
 Template.freeboxes.events({
     'click .freebox input[name="schedule"]' : function(e) {
@@ -41,7 +41,8 @@ Template.form.events({
         var options = {
             title: jQuery('input[name="title"]').val(),
             hostname: jQuery('input[name="hostname"]').val(),
-            password: jQuery('input[name="password"]').val()
+            port: jQuery('input[name="port"]').val(),
+            password: jQuery('input[name="password"]').val()            
         };
         Meteor.call('addFreebox', options);
     }
@@ -51,9 +52,17 @@ Template.freeboxes.freeboxes = function () {
     return Freeboxes.find();
 };
 
+Template.freeboxes.freeboxError = function () {
+    return Freeboxes.find({owner: Meteor.userId, connected: false}, {fields: {_id: 1}}).count() > 0
+}
+
+Template.freeboxes.selectedFreebox = function() {
+    return Session.get('selected-freebox');
+}
+
 Template.freeboxes.helpers({
-    selectedFreebox: function() {
-        return Session.get('selected-freebox');
+    freeboxError: function () {
+        return Freeboxes.find({owner: Meteor.userId(), connected: false}, {fields: {_id: 1}}).count();
     },
     classButtonHour: function(enabled) {
         if(enabled) {

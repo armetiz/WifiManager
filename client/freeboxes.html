@@ -31,6 +31,7 @@
     <form class="form-inline">
         <input type="text" name="title" placeholder="Title" />
         <input type="text" name="hostname" placeholder="Hostname" />
+        <input type="text" name="port" placeholder="Port" />
         <input type="password" name="password" placeholder="Password" />
         <input type="button" class="btn" name="add" value="Add" />
     </form>
@@ -49,8 +50,8 @@
         {{#each freeboxes}}
         <tr class="freebox {{{classFreebox this}}}">
             <td>{{title}}</td>
-            <td>{{hostname}}</td>
-            <td>{{#if connected}}connected{{else}}not connected: {{latestError}}{{/if}}</td>
+            <td>{{hostname}}{{#if port}}:{{port}}{{/if}}</td>
+            <td>{{#if connected}}connected{{else}}{{latestError}}{{/if}}</td>
             <td>{{#if wifi}}active{{else}}inactive{{/if}}</td>
             <td>
                 <input type="button" name="toggle" class="btn btn-small" value="toggle" />
@@ -60,6 +61,11 @@
         </tr>
         {{/each}}
     </table>
+    
+    {{#if freeboxError }}
+    Check thay you allow external call to your freebox.<br /><br />
+    <img src="freebox_configuration.png" />
+    {{/if}}
     
     {{#if selectedFreebox }}
     <div class="scheduler">

@@ -55,6 +55,7 @@ Meteor.methods({
             title: options.title,
             hostname: options.hostname,
             password: options.password,
+            port: options.port,
             wifi: false,
             hoursEnabled: 0,
             connected: false

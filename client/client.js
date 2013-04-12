@@ -13,6 +13,7 @@ Template.freeboxes.events({
         }
     },
     'click .freebox input[name="delete"]' : function(e) {
+        Session.set('selected-freebox', null);
         Freeboxes.remove(this._id);
     },
     'click .freebox input[name="toggle"]' : function() {

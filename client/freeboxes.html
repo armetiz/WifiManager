@@ -50,7 +50,7 @@
         <tr class="freebox {{{classFreebox this}}}">
             <td>{{title}}</td>
             <td>{{hostname}}</td>
-            <td>{{#if connected}}connected{{else}}not connected{{/if}}</td>
+            <td>{{#if connected}}connected{{else}}not connected: {{latestError}}{{/if}}</td>
             <td>{{#if wifi}}active{{else}}inactive{{/if}}</td>
             <td>
                 <input type="button" name="toggle" class="btn btn-small" value="toggle" />

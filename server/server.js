@@ -28,7 +28,7 @@ var BoxManager = {
             });
         });
         freeboxCnx.on('error', function(message) {
-            BoxManager._error(freebox);
+            BoxManager._error(freebox, message);
         });
 
         freeboxCnx.connect();
@@ -38,9 +38,9 @@ var BoxManager = {
             Freeboxes.update(freebox._id, {$set: {wifi: wifi, connected: true}});
         }).run();
     },
-    _error: function(freebox) {
+    _error: function(freebox, message) {
         Fiber(function() {
-            Freeboxes.update(freebox._id, {$set: {wifi: false, connected: false}});
+            Freeboxes.update(freebox._id, {$set: {wifi: false, connected: false, latestError: message}});
         }).run();
     },
     checkConnection: function(freebox) {
@@ -61,7 +61,7 @@ var BoxManager = {
         });
 
         freeboxCnx.on('error', function(message) {
-            BoxManager._error(freebox);
+            BoxManager._error(freebox, message);
         });
 
         freeboxCnx.connect();

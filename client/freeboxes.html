@@ -1,0 +1,68 @@
+<head>
+  <title>wifiManager</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="offset10">{{loginButtons}}</div>
+        </div>
+
+        {{#if currentUser}}
+            {{> form}}
+            {{> freeboxes}}
+        {{else}}
+            Must login to user this service
+        {{/if}}
+    </div>
+</body>
+
+<template name="form">
+    <h2>Add box</h2>
+    <form class="form-inline">
+        <input type="text" name="title" placeholder="Title" />
+        <input type="text" name="hostname" placeholder="Hostname" />
+        <input type="password" name="password" placeholder="Password" />
+        <input type="button" class="btn" name="add" value="Add" />
+    </form>
+</template>
+
+<template name="freeboxes">
+    <h2>Boxes</h2>
+    <table class="table table-bordered freeboxes">
+        <tr>
+            <th>Title</th>
+            <th>Hostname</th>
+            <th>Wifi</th>
+            <th>Action</th>
+        </tr>
+        {{#each freeboxes}}
+        <tr class="freebox {{#if wifi}}success{{else}}error{{/if}}">
+            <td>{{title}}</td>
+            <td>{{hostname}}</td>
+            <td>{{#if wifi}}active{{else}}inactive{{/if}}</td>
+            <td>
+                <input type="button" name="toggle" class="btn" value="toggle" />
+                <input type="button" name="schedule" class="btn" value="schedule" />
+                <input type="button" name="delete" class="btn" value="delete" />
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+    
+    {{#if selectedFreebox }}
+    <div class="scheduler">
+        <h3>Hours to enable or disable wifi connection</h3>
+        {{#each hours}}
+            <button type="button" class="{{{classButtonHour enabled}}} btn hour" data-hour="{{hour}}">{{hour}}</button>
+        {{/each}}
+        <br />
+        <br />
+        <div class="legend">
+            <h3>Legend</h3>
+            <button type="button" class="btn btn-success">active</button>
+            <button type="button" class="btn btn-inverse">inactive</button>
+        </div>
+    </div>
+    {{/if}}
+</template>

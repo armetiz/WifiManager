@@ -88,20 +88,5 @@ Meteor.setInterval(BoxManager.checkConnectionsToToggle, 10000);
 Meteor.methods({
     toggleConnection: function(freebox) {
         BoxManager.toggleConnection(freebox);
-    },
-    getDate: function(freebox) {
-        return new Date();
-    },
-    getHour: function(freebox) {
-        return (new Date()).getUTCHours();
-    },
-    getConnectionsToToggle: function() {
-        return BoxManager.getConnectionsToToggle();
-    },
-    getFreeboxes: function() {
-        return Freeboxes.find().fetch();
-    },
-    getUnderscoreVersion: function() {
-        return _.VERSION;
     }
 });

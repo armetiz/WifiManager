@@ -7,12 +7,21 @@
         <div class="row">
             <div class="offset10">{{loginButtons}}</div>
         </div>
+        
+        <h1>Freebox wifi manager</h1>
+        <p>
+            All code is available on github : <a href="https://github.com/armetiz/WifiManager">wifimanager</a>
+            <br />
+            <br />
+            Your personnal informations are only use to manage your WiFi, nothing more.
+        
+        </p>
 
         {{#if currentUser}}
             {{> form}}
             {{> freeboxes}}
         {{else}}
-            Must login to user this service
+            You have to <strong>be connected</strong> to use this service
         {{/if}}
     </div>
     <script>
@@ -28,12 +37,47 @@
 
 <template name="form">
     <h2>Add box</h2>
-    <form class="form-inline">
-        <input type="text" name="title" placeholder="Title" />
-        <input type="text" name="hostname" placeholder="Hostname" />
-        <input type="text" name="port" placeholder="Port" />
-        <input type="password" name="password" placeholder="Password" />
-        <input type="button" class="btn" name="add" value="Add" />
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="title">Title</label>
+            <div class="controls">
+                <input type="text" id="title" name="title" placeholder="Title" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="hostname">Title</label>
+            <div class="controls">
+                <input type="text" id="hostname" name="hostname" placeholder="Hostname (or your public IP)" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="port">Title</label>
+            <div class="controls">
+                <input type="text" id="port" name="port" placeholder="Port" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" id="password" name="password" placeholder="Freebox Password" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="timezone">Timezone</label>
+            <div class="controls">
+                <select id="timezone" name="timezone">
+                    <option value="Europe/Paris">Europe/Paris</option>
+                    <option value="America/New_York">America/New_York</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input type="button" class="btn" name="add" value="Add" />
+            </div>
+        </div>
+        
+        
     </form>
 </template>
 
@@ -82,4 +126,9 @@
         </div>
     </div>
     {{/if}}
+    <input type="button" name="getConnectionsToToggle" class="btn btn-small" value="getConnectionsToToggle" />
+    <input type="button" name="getFreeboxes" class="btn btn-small" value="getFreeboxes" />
+    <input type="button" name="getUnderscoreVersion" class="btn btn-small" value="getUnderscoreVersion" />
+    <input type="button" name="getHour" class="btn btn-small" value="getHour" />
+    <input type="button" name="getDate" class="btn btn-small" value="getDate" />
 </template>

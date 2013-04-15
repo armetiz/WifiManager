@@ -64,16 +64,13 @@ var BoxManager = {
 
         freeboxConnection.connect();
     },
-    checkConnections: function() {
-        var currentHour = (new Date()).getHours();
-        var freeboxesToToggle = _.filter(Freeboxes.find().fetch(), function(freebox) {
-            return freebox.wifi !== Application.isHourEnabled(freebox.hoursEnabled, currentHour);
+    checkConnectionsToToggle: function() {
+        _.each(BoxManager.getConnectionsToToggle(), BoxManager.toggleConnection);
+    },
+    getConnectionsToToggle: function() {
+        return _.filter(Freeboxes.find().fetch(), function(freebox) {
+            return freebox.wifi !== Application.isHourEnabled(freebox.hoursEnabled, (new Date()).setTimezone(freebox.timezone).getHours());
         });
-        
-        _.each(freeboxesToToggle, BoxManager.toggleConnection);
-        
-        if(freeboxesToToggle.length > 0)
-            console.log(freeboxesToToggle);
     }
 };
 
@@ -86,10 +83,25 @@ Meteor.setInterval(function() {
     _.each(freeboxes, BoxManager.checkConnection);
 }, 2000);
 
-Meteor.setInterval(BoxManager.checkConnections, 10000);
+Meteor.setInterval(BoxManager.checkConnectionsToToggle, 10000);
 
 Meteor.methods({
     toggleConnection: function(freebox) {
         BoxManager.toggleConnection(freebox);
+    },
+    getDate: function(freebox) {
+        return new Date();
+    },
+    getHour: function(freebox) {
+        return (new Date()).getUTCHours();
+    },
+    getConnectionsToToggle: function() {
+        return BoxManager.getConnectionsToToggle();
+    },
+    getFreeboxes: function() {
+        return Freeboxes.find().fetch();
+    },
+    getUnderscoreVersion: function() {
+        return _.VERSION;
     }
 });

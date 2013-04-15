@@ -19,6 +19,31 @@ Template.freeboxes.events({
     'click .freebox input[name="toggle"]' : function() {
         Meteor.call('toggleConnection', this);
     },
+    'click input[name="getConnectionsToToggle"]' : function() {
+        Meteor.call('getConnectionsToToggle', function(error, result) {
+            console.log(result);
+        });
+    },
+    'click input[name="getFreeboxes"]' : function() {
+        Meteor.call('getFreeboxes', function(error, result) {
+            console.log(result);
+        });
+    },
+    'click input[name="getUnderscoreVersion"]' : function() {
+        Meteor.call('getUnderscoreVersion', function(error, result) {
+            console.log(result);
+        });
+    },
+    'click input[name="getDate"]' : function() {
+        Meteor.call('getDate', function(error, result) {
+            console.log(result);
+        });
+    },
+    'click input[name="getHour"]' : function() {
+        Meteor.call('getHour', function(error, result) {
+            console.log(result);
+        });
+    },
     'click .scheduler .hour': function(e) {
         var hourButton = jQuery(e.currentTarget);
         var freebox = Freeboxes.findOne(Session.get('selected-freebox')._id);   //get fresh version
@@ -42,7 +67,8 @@ Template.form.events({
             title: jQuery('input[name="title"]').val(),
             hostname: jQuery('input[name="hostname"]').val(),
             port: jQuery('input[name="port"]').val(),
-            password: jQuery('input[name="password"]').val()            
+            password: jQuery('input[name="password"]').val(),
+            timezone: jQuery('input[name="timezone"]').val()
         };
         Meteor.call('addFreebox', options);
     }

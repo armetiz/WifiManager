@@ -50,11 +50,16 @@ Meteor.methods({
             throw new Meteor.Error(400, "Required parameter missing: 'password'");
         }
         
+        if(!_.has(options, 'timezone') && '' !== options['timezone']) {
+            options.timezone = 'Europe/Paris';
+        }
+        
         return Freeboxes.insert({
             owner: this.userId,
             title: options.title,
             hostname: options.hostname,
             password: options.password,
+            timezone: options.timezone,
             port: options.port,
             wifi: false,
             hoursEnabled: 0,

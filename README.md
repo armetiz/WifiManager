@@ -1,0 +1,6 @@
+WifiManager
+===========
+
+Application based on Meteor to manager your Wifi connection.
+
+Work with Freebox v6.
